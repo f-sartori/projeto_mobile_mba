@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="CarBillProject/app/src/main/res/layout/activity_adicionar_pessoa.xml" value="0.1793478260869565" />
+        <entry key="CarBillProject/app/src/main/res/layout/activity_infos_do_cadastro.xml" value="0.1793478260869565" />
+        <entry key="CarBillProject/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
+        <entry key="CarBillProject/app/src/main/res/layout/activity_tela_configuracoes.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/activity_tela_contatos.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/activity_tela_diaria.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/activity_tela_info_person.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/tupla_contatos.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/tupla_corrida_diaria.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/tupla_historico.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/layout/tupla_pessoa_e_divida_total.xml" value="0.14387031408308004" />
+        <entry key="CarBillProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
+        <entry key="CarBillProject/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/CarBillProject" />
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="11" project-jdk-type="JavaSDK" />
+</project>
