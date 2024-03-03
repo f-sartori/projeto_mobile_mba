@@ -1,3 +1,7 @@
+/**
+ * Tela_infos_do_cadastro é uma Activity que permite visualizar e editar as informações de um cadastro de pessoa.
+ * Nesta tela, os usuários podem ver os detalhes de um cadastro existente e têm a opção de atualizar ou excluir o cadastro.
+ */
 package br.com.application.carbill;
 
 import androidx.appcompat.app.AlertDialog;
@@ -16,20 +20,22 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 
 public class Tela_infos_do_cadastro extends AppCompatActivity {
 
+    // Componentes da interface de usuário
     public TextView txtTitulo;
     public EditText editTextNome, editTextSobrenome, editTextApelido, editTextTelefone, editTextRua, editTextBairro, editTextNumero, editTextValorPorCorrida;
     public Button buttonExcluir, buttonAtualizar;
 
+    // ID da pessoa
     int id;
 
     //BANCO
     private SQLiteDatabase banco;
     private static final String DATABASE_NAME = "banco_de_dados_carbill";
 
+    // Objeto pessoa
     ClassPessoa pessoa = new ClassPessoa();
 
     @Override
@@ -37,18 +43,20 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infos_do_cadastro);
 
-        txtTitulo = (TextView) findViewById(R.id.txtTitulo);
-        editTextNome = (EditText) findViewById(R.id.editTextNome);
-        editTextSobrenome = (EditText) findViewById(R.id.editTextSobrenome);
-        editTextApelido = (EditText) findViewById(R.id.editTextApelido);
-        editTextTelefone = (EditText) findViewById(R.id.editTextTelefone);
-        editTextRua = (EditText) findViewById(R.id.editTextRua);
-        editTextBairro = (EditText) findViewById(R.id.editTextBairro);
-        editTextNumero = (EditText) findViewById(R.id.editTextNumero);
-        editTextValorPorCorrida = (EditText) findViewById(R.id.editTextValorPorCorrida);
-        buttonExcluir = (Button) findViewById(R.id.buttonExcluir);
-        buttonAtualizar = (Button) findViewById(R.id.ButtonAtualizar);
+        // Inicialização dos componentes da interface de usuário
+        txtTitulo = findViewById(R.id.txtTitulo);
+        editTextNome = findViewById(R.id.editTextNome);
+        editTextSobrenome = findViewById(R.id.editTextSobrenome);
+        editTextApelido = findViewById(R.id.editTextApelido);
+        editTextTelefone = findViewById(R.id.editTextTelefone);
+        editTextRua = findViewById(R.id.editTextRua);
+        editTextBairro = findViewById(R.id.editTextBairro);
+        editTextNumero = findViewById(R.id.editTextNumero);
+        editTextValorPorCorrida = findViewById(R.id.editTextValorPorCorrida);
+        buttonExcluir = findViewById(R.id.buttonExcluir);
+        buttonAtualizar = findViewById(R.id.ButtonAtualizar);
 
+        // Define o comportamento do botão de exclusão
         buttonExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,6 +64,7 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
             }
         });
 
+        // Define o comportamento do botão de atualização
         buttonAtualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -64,20 +73,25 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
             }
         });
 
-
+        // Obtém o ID da pessoa passado como extra da Intent
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             id = extras.getInt("id_pessoa");
         }
 
+        // Define o ID da pessoa
         pessoa.setId(id);
 
+        // Carrega as informações do cadastro da pessoa do banco de dados
         acessoBanco();
 
+        // Exibe as informações do cadastro da pessoa na interface de usuário
         listoInfos();
-
     }
 
+    /**
+     * Método para acessar o banco de dados e obter as informações do cadastro da pessoa.
+     */
     public void acessoBanco(){
         try{
             banco = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
@@ -86,14 +100,14 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
 
             if(cursor.moveToFirst()){
                 do{
-                    String nome = cursor.getString((int) cursor.getColumnIndex("nome"));
-                    String sobrenome = cursor.getString((int) cursor.getColumnIndex("sobrenome"));
-                    String apelido = cursor.getString((int) cursor.getColumnIndex("apelido"));
-                    String telefone = cursor.getString((int) cursor.getColumnIndex("telefone"));
-                    String rua = cursor.getString((int) cursor.getColumnIndex("rua"));
-                    String bairro = cursor.getString((int) cursor.getColumnIndex("bairro"));
-                    int numero = cursor.getInt((int) cursor.getColumnIndex("numero"));
-                    double valor_por_corrida = cursor.getDouble((int) cursor.getColumnIndex("valor_por_corrida"));
+                    String nome = cursor.getString(cursor.getColumnIndex("nome"));
+                    String sobrenome = cursor.getString(cursor.getColumnIndex("sobrenome"));
+                    String apelido = cursor.getString(cursor.getColumnIndex("apelido"));
+                    String telefone = cursor.getString(cursor.getColumnIndex("telefone"));
+                    String rua = cursor.getString(cursor.getColumnIndex("rua"));
+                    String bairro = cursor.getString(cursor.getColumnIndex("bairro"));
+                    int numero = cursor.getInt(cursor.getColumnIndex("numero"));
+                    double valor_por_corrida = cursor.getDouble(cursor.getColumnIndex("valor_por_corrida"));
 
                     pessoa.setNome(nome);
                     pessoa.setSobrenome(sobrenome);
@@ -114,6 +128,9 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para exibir as informações do cadastro da pessoa na interface de usuário.
+     */
     public void listoInfos(){
         txtTitulo.setText(pessoa.getNome() + " " + pessoa.getSobrenome());
         editTextNome.setText(pessoa.getNome());
@@ -122,41 +139,18 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
         editTextTelefone.setText(pessoa.getTelefone());
         editTextRua.setText(pessoa.getRua());
         editTextBairro.setText(pessoa.getBairro());
-        editTextNumero.setText(pessoa.getNumero() +"");
+        editTextNumero.setText(String.valueOf(pessoa.getNumero()));
         editTextValorPorCorrida.setText(String.valueOf(pessoa.getValor_por_corrida()));
-
     }
 
-    public void btnExcluir(){
-        if(temDivida()){
-            String valorFormatado_DividaTotal = NumberFormat.getCurrencyInstance().format(pessoa.getDivida_total());
-            Toast.makeText(this, "Impossível excluir. Esse usuário ainda possui uma dívida de " + valorFormatado_DividaTotal, Toast.LENGTH_SHORT).show();
-        }else{
-            AlertDialog.Builder msgBox = new AlertDialog.Builder(this);
-            msgBox.setTitle("EXCLUIR CADASTRO");
-            msgBox.setIcon(R.drawable.ic_lixeira);
-            msgBox.setMessage("Tem certeza que deseja excluir permanentemente esse cadastro?\nEssa ação não pode ser desfeita.");
-            msgBox.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    deletarPessoa();
-                    finish();
-                    Toast.makeText(Tela_infos_do_cadastro.this, pessoa.getNome() + " " + pessoa.getSobrenome() + " foi excluido com sucesso.", Toast.LENGTH_SHORT).show();
-                }
-            });
-            msgBox.setNegativeButton("Não", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    Toast.makeText(Tela_infos_do_cadastro.this, "Operação cancelada.", Toast.LENGTH_SHORT).show();
-                }
-            });
-            msgBox.show();
-        }
-    }
-
+    /**
+     * Método para verificar se a pessoa tem alguma dívida pendente.
+     * @return true se a pessoa tem dívida, false caso contrário.
+     */
     public boolean temDivida(){
         boolean temDivida = false;
-        double deve = 0.0f;
+        double deve = 0.0;
+
         try{
             banco = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
 
@@ -164,13 +158,12 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
 
             if(cursor.moveToFirst()){
                 do{
-                    deve = cursor.getDouble((int) cursor.getColumnIndex("Total"));
+                    deve = cursor.getDouble(cursor.getColumnIndex("Total"));
                     pessoa.setDivida_total(deve);
                 }while (cursor.moveToNext());
             }
 
-            if(deve > 0)
-                temDivida = true;
+            temDivida = deve > 0;
 
             banco.close();
         }catch (Exception e){
@@ -180,6 +173,9 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
         return temDivida;
     }
 
+    /**
+     * Método para excluir a pessoa do banco de dados.
+     */
     public void deletarPessoa(){
         try{
             banco = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
@@ -192,6 +188,9 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método para atualizar as informações da pessoa no banco de dados.
+     */
     public void updatePessoa(){
         try{
             banco = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
@@ -250,6 +249,9 @@ public class Tela_infos_do_cadastro extends AppCompatActivity {
         }
     }
 
+    /**
+     * Método chamado quando a Activity é finalizada. Realiza a transição de animação ao sair da tela.
+     */
     @Override
     public void finish(){
         super.finish();

@@ -1,3 +1,8 @@
+/**
+ * TelaContatos é uma Activity que permite visualizar e gerenciar os contatos cadastrados.
+ * Nesta tela, os usuários podem ver uma lista de contatos, excluir todos os contatos e acessar
+ * informações detalhadas de cada contato.
+ */
 package br.com.application.carbill;
 
 import androidx.appcompat.app.AlertDialog;
@@ -21,14 +26,16 @@ import java.util.ArrayList;
 
 public class TelaContatos extends AppCompatActivity {
 
+    // Componentes da interface de usuário
     public ImageButton btnExcluir;
     public TextView txtNumContatos;
     public ListView listPessoas;
 
-    //BANCO
+    // Banco de dados
     private SQLiteDatabase banco;
     private static final String DATABASE_NAME = "banco_de_dados_carbill";
 
+    // Lista de pessoas
     public ArrayList<ClassPessoa> pessoas;
 
     @Override
@@ -36,12 +43,15 @@ public class TelaContatos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_contatos);
 
+        // Inicialização dos componentes da interface de usuário
         btnExcluir = (ImageButton) findViewById(R.id.btnExcluir);
         listPessoas = (ListView) findViewById(R.id.listPessoas);
         txtNumContatos = (TextView) findViewById(R.id.txtNumContatos);
 
+        // Lista os contatos
         listarPessoas();
 
+        // Define o comportamento do botão de exclusão
         btnExcluir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -49,24 +59,27 @@ public class TelaContatos extends AppCompatActivity {
             }
         });
 
+        // Define o comportamento ao clicar em um item da lista de contatos
         listPessoas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // Abre a tela de informações do cadastro do contato selecionado
                 Intent intent = new Intent(TelaContatos.this, Tela_infos_do_cadastro.class);
                 try {
                     intent.putExtra("id_pessoa", pessoas.get(i).getId());
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(TelaContatos.this, "erro: itent.putExtra(id)", Toast.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
                 startActivity(intent);
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
-
             }
         });
-
     }
 
+    /**
+     * Método para listar os contatos cadastrados.
+     */
     public void listarPessoas(){
         try{
             banco = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
@@ -100,30 +113,24 @@ public class TelaContatos extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume(){
-        super.onResume();
-        listarPessoas();
-    }
-
-    @Override
-    public void finish(){
-        super.finish();
-        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
-    }
-
+    /**
+     * Método para deletar todos os contatos do banco de dados.
+     */
     public void deletarTudo(){
         try {
             banco = openOrCreateDatabase(DATABASE_NAME, MODE_PRIVATE, null);
             banco.execSQL("DELETE FROM TB_VIAGEM;");
             banco.execSQL("DELETE FROM TB_PESSOA;");
             banco.close();
-        }catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(this, "erro: deletarTudo()", Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
 
+    /**
+     * Método para exibir uma caixa de diálogo de confirmação antes de excluir todos os contatos.
+     */
     public void confirmacao(){
         AlertDialog.Builder msgBox = new AlertDialog.Builder(this);
         msgBox.setTitle("DELETAR TUDO");
@@ -146,4 +153,15 @@ public class TelaContatos extends AppCompatActivity {
         msgBox.show();
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+        listarPessoas();
+    }
+
+    @Override
+    public void finish(){
+        super.finish();
+        overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+    }
 }
