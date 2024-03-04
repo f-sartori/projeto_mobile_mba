@@ -1,12 +1,13 @@
+```
+MBA AS_06
 Grupo:
-
-*Victor Araujo
-*Felipe Marcelo Albuquerque Sartori
-*Jonathas Duarte Pereira
-*Wellington Barbosa de Souza 
-*Mauricio Ferraz dos Santos
-*Leonardo Silva dos Santos Rodrigues
-
+- Victor Araujo
+- Felipe Marcelo Albuquerque Sartori
+- Jonathas Duarte Pereira
+- Wellington Barbosa de Souza 
+- Mauricio Ferraz dos Santos
+- Leonardo Silva dos Santos Rodrigues
+```
 
 # Car Mobile Project
 ## Sobre
